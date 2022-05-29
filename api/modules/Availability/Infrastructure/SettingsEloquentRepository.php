@@ -28,4 +28,14 @@ final class SettingsEloquentRepository implements SettingsRepositoryInterface
 
         return $this->transformer->transformToEntity($model);
     }
+
+    /**
+     * @throws JsonException
+     */
+    public function save(SettingsEntity $entity): void
+    {
+        $model = $this->transformer->transformToModel($entity);
+
+        $model->save();
+    }
 }

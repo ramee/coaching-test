@@ -39,4 +39,27 @@ final class SettingsEloquentTransformer
             ),
         );
     }
+
+    /**
+     * @throws JsonException
+     */
+    public function transformToModel(SettingsEntity $entity): AvailabilitySettings
+    {
+        $model = new AvailabilitySettings();
+        $model->id = $entity->id()->uuid()->toString();
+        $model->user_id = $entity->userId()->uuid()->toString();
+        $availabilities = array_map(static function (Availability $availability) {
+            return [
+                'day' => $availability->day()->value,
+                'time_interval' => [
+                    'start' => $availability->timeInterval()->start()->time(),
+                    'end' => $availability->timeInterval()->end()->time(),
+                ],
+            ];
+        }, $entity->availabilityList()->availabilities());
+
+        $model->availabilities = json_encode($availabilities, JSON_THROW_ON_ERROR);
+
+        return $model;
+    }
 }

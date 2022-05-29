@@ -6,6 +6,7 @@ namespace Modules\Availability\Domain\ValueObject;
 
 final class Time
 {
+    public const PATTERN = '/^(([0-1]\d|2[0-3]):[0-5]\d(:[0-5]\d)?)$/';
     private string $time;
 
     public function __construct(string $time)
@@ -26,9 +27,7 @@ final class Time
 
     private function assertValue(string $time): void
     {
-        $regex = '/^(([0-1]\d|2[0-3]):[0-5]\d(:[0-5]\d)?)$/';
-
-        if (!preg_match($regex, $time)) {
+        if (!preg_match(self::PATTERN, $time)) {
             throw new \InvalidArgumentException(sprintf('%s is invalid time', $time));
         }
     }
