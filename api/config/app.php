@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use Modules\Availability\Infrastructure\AvailabilityServiceProvider;
 
 return [
 
@@ -191,7 +192,7 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        AvailabilityServiceProvider::class,
     ],
 
     /*

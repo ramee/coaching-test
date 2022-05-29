@@ -6,7 +6,7 @@ namespace Modules\Availability\Domain\ValueObject;
 
 use Modules\Shared\Domain\Id;
 
-class AvailabilityUserSettingsId extends Id
+class SettingsId extends Id
 {
 
 }
