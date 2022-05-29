@@ -28,7 +28,7 @@ final class Time
     {
         $regex = '/^(([0-1]\d|2[0-3]):[0-5]\d(:[0-5]\d)?)$/';
 
-        if (preg_match($regex, $time)) {
+        if (!preg_match($regex, $time)) {
             throw new \InvalidArgumentException(sprintf('%s is invalid time', $time));
         }
     }

@@ -21,11 +21,11 @@ final class SettingsJsonTransformer implements \JsonSerializable
         return [
             'id' => $this->entity->id()->uuid()->toString(),
             'user_id' => $this->entity->userId()->uuid()->toString(),
-            'availability_list' => array_map(function (Availability $availability) {
+            'availabilities' => array_map(static function (Availability $availability) {
                 return [
                     'day' => $availability->day()->value,
-                    'start_time' => $availability->timeInterval()->start()->time(),
-                    'end_time' => $availability->timeInterval()->end()->time(),
+                    'start' => $availability->timeInterval()->start()->time(),
+                    'end' => $availability->timeInterval()->end()->time(),
                 ];
             }, $this->entity->availabilityList()->availabilities()),
         ];

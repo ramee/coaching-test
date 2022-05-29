@@ -6,6 +6,7 @@ namespace Modules\Availability\Infrastructure;
 
 use App\Models\AvailabilitySettings;
 use JsonException;
+use Modules\Availability\Domain\DayEnum;
 use Modules\Availability\Domain\SettingsEntity;
 use Modules\Availability\Domain\ValueObject\Availability;
 use Modules\Availability\Domain\ValueObject\AvailabilityList;
@@ -25,15 +26,17 @@ final class SettingsEloquentTransformer
         return new SettingsEntity(
             new SettingsId(Uuid::fromString($availabilitySettings->id)),
             new UserId(Uuid::fromString($availabilitySettings->user_id)),
-            new AvailabilityList(...array_map(static function (object $availabilityData): Availability {
+            new AvailabilityList(
+                ...array_map(static function (object $availabilityData): Availability {
                 return new Availability(
-                    $availabilityData->day,
+                    DayEnum::from($availabilityData->day),
                     new TimeInterval(
-                        new Time($availabilityData->timeInterval->start),
-                        new Time($availabilityData->timeInterval->end),
+                        new Time($availabilityData->time_interval->start),
+                        new Time($availabilityData->time_interval->end),
                     )
                 );
-            }, json_decode($availabilitySettings->availabilities, false, 512, JSON_THROW_ON_ERROR))),
+            }, json_decode($availabilitySettings->availabilities, false, 512, JSON_THROW_ON_ERROR))
+            ),
         );
     }
 }
