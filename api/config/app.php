@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Modules\Availability\Infrastructure\AvailabilityServiceProvider;
+use Modules\User\Infrastructure\UserServiceProvider;
 
 return [
 
@@ -193,6 +194,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         AvailabilityServiceProvider::class,
+        UserServiceProvider::class,
     ],
 
     /*
