@@ -6,5 +6,5 @@ namespace Modules\User\Domain;
 
 interface UserRepositoryInterface
 {
-    public function findAll(): UserList;
+    public function findAllCoaches(): UserList;
 }

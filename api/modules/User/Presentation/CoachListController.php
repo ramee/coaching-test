@@ -7,7 +7,7 @@ namespace Modules\User\Presentation;
 use Illuminate\Http\JsonResponse;
 use Modules\User\Domain\UserRepositoryInterface;
 
-final class ListController
+final class CoachListController
 {
     private UserRepositoryInterface $repository;
     private UserArrayTransformer $transformer;
@@ -20,7 +20,7 @@ final class ListController
 
     public function __invoke(): JsonResponse
     {
-        $userList = $this->repository->findAll();
+        $userList = $this->repository->findAllCoaches();
 
         return new JsonResponse($this->transformer->transformToArray($userList));
     }
