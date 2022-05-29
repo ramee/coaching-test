@@ -21,22 +21,23 @@ final class SettingsEloquentTransformer
     /**
      * @throws JsonException
      */
-    public function transformToEntity(AvailabilitySettings $availabilitySettings): SettingsEntity
+    public function transformToEntity(AvailabilitySettings $model): SettingsEntity
     {
         return new SettingsEntity(
-            new SettingsId(Uuid::fromString($availabilitySettings->id)),
-            new UserId(Uuid::fromString($availabilitySettings->user_id)),
+            new SettingsId(Uuid::fromString($model->id)),
+            new UserId(Uuid::fromString($model->user_id)),
             new AvailabilityList(
                 ...array_map(static function (object $availabilityData): Availability {
-                return new Availability(
-                    DayEnum::from($availabilityData->day),
-                    new TimeInterval(
-                        new Time($availabilityData->time_interval->start),
-                        new Time($availabilityData->time_interval->end),
-                    )
-                );
-            }, json_decode($availabilitySettings->availabilities, false, 512, JSON_THROW_ON_ERROR))
+                    return new Availability(
+                        DayEnum::from($availabilityData->day),
+                        new TimeInterval(
+                            new Time($availabilityData->time_interval->start),
+                            new Time($availabilityData->time_interval->end),
+                        )
+                    );
+                }, json_decode($model->availabilities, false, 512, JSON_THROW_ON_ERROR))
             ),
+            $model->is_recurring,
         );
     }
 
@@ -47,6 +48,7 @@ final class SettingsEloquentTransformer
     {
         $model->id = $entity->id()->uuid()->toString();
         $model->user_id = $entity->userId()->uuid()->toString();
+        $model->is_recurring = $entity->isRecurring();
         $availabilities = array_map(static function (Availability $availability) {
             return [
                 'day' => $availability->day()->value,

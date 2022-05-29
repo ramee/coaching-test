@@ -31,6 +31,7 @@ final class SaveSettingsController
         $request->validate([
             'id' => ['required', 'uuid'],
             'user_id' => ['required', 'exists:users,id'],
+            'is_recurring' => ['required', 'boolean'],
             'availabilities' => ['required', 'array'],
             'availabilities.*.day' => ['required', new Enum(DayEnum::class)],
             'availabilities.*.time_interval' => ['required', 'array'],

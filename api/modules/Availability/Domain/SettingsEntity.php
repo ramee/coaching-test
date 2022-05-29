@@ -13,12 +13,14 @@ final class SettingsEntity
     private SettingsId $id;
     private UserId $userId;
     private AvailabilityList $availabilityList;
+    private bool $isRecurring;
 
-    public function __construct(SettingsId $id, UserId $userId, AvailabilityList $availabilityList)
+    public function __construct(SettingsId $id, UserId $userId, AvailabilityList $availabilityList, bool $isRecurring)
     {
         $this->id = $id;
         $this->userId = $userId;
         $this->availabilityList = $availabilityList;
+        $this->isRecurring = $isRecurring;
     }
 
     public function id(): SettingsId
@@ -34,5 +36,10 @@ final class SettingsEntity
     public function availabilityList(): AvailabilityList
     {
         return $this->availabilityList;
+    }
+
+    public function isRecurring(): bool
+    {
+        return $this->isRecurring;
     }
 }

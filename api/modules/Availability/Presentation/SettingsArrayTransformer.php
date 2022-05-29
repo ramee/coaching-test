@@ -28,6 +28,7 @@ final class SettingsArrayTransformer
                     'end' => $availability->timeInterval()->end()->time(),
                 ];
             }, $entity->availabilityList()->availabilities()),
+            'is_recurring' => $entity->isRecurring(),
         ];
     }
 
@@ -45,6 +46,7 @@ final class SettingsArrayTransformer
                     ),
                 );
             }, $data['availabilities'])),
+            $data['is_recurring'],
         );
     }
 }

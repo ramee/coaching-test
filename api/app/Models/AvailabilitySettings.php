@@ -17,4 +17,8 @@ class AvailabilitySettings extends Model
 {
     protected $keyType = 'string';
     public $incrementing = false;
+
+    protected $casts = [
+        'is_recurring' => 'bool',
+    ];
 }
