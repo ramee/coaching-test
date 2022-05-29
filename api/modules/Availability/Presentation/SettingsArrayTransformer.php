@@ -24,8 +24,10 @@ final class SettingsArrayTransformer
             'availabilities' => array_map(static function (Availability $availability) {
                 return [
                     'day' => $availability->day()->value,
-                    'start' => $availability->timeInterval()->start()->time(),
-                    'end' => $availability->timeInterval()->end()->time(),
+                    'time_interval' => [
+                        'start' => $availability->timeInterval()->start()->time(),
+                        'end' => $availability->timeInterval()->end()->time(),
+                    ],
                 ];
             }, $entity->availabilityList()->availabilities()),
             'is_recurring' => $entity->isRecurring(),
