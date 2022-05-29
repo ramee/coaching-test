@@ -18,7 +18,7 @@ export default defineComponent({
       this.selectedUser = user;
     },
     async fetchUsers() {
-      const usersResponse = await fetch("http://localhost/api/user", {
+      const usersResponse = await fetch("http://localhost/api/user/coaches", {
         headers: { Accept: "application/json" },
       });
 
