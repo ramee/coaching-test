@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Availability\Domain\ValueObject;
 
-class TimeInterval
+final class TimeInterval
 {
     private Time $start;
     private Time $end;

@@ -6,7 +6,7 @@ namespace Modules\Availability\Domain\ValueObject;
 
 use Modules\Availability\Domain\DayEnum;
 
-class Availability
+final class Availability
 {
     private DayEnum $day;
     private TimeInterval $timeInterval;

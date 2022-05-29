@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Availability\Domain\ValueObject;
 
-class Time
+final class Time
 {
     private string $time;
 
