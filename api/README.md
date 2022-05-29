@@ -13,3 +13,6 @@ $ docker-compose run --rm laravel.test php artisan db:seed
 ```shell
 $ docker-compose up
 ```
+
+## todo
+Create a method that will return coach’s availability that will be used by the developer that is working on the “book a session” user story.
