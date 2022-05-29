@@ -43,9 +43,8 @@ final class SettingsEloquentTransformer
     /**
      * @throws JsonException
      */
-    public function transformToModel(SettingsEntity $entity): AvailabilitySettings
+    public function transformToModel(SettingsEntity $entity, AvailabilitySettings $model): AvailabilitySettings
     {
-        $model = new AvailabilitySettings();
         $model->id = $entity->id()->uuid()->toString();
         $model->user_id = $entity->userId()->uuid()->toString();
         $availabilities = array_map(static function (Availability $availability) {

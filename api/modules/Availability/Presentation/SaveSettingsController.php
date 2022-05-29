@@ -7,6 +7,7 @@ namespace Modules\Availability\Presentation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Enum;
+use Illuminate\Validation\ValidationException;
 use Modules\Availability\Domain\DayEnum;
 use Modules\Availability\Domain\SettingsRepositoryInterface;
 use Modules\Availability\Domain\ValueObject\Time;
@@ -22,6 +23,9 @@ final class SaveSettingsController
         $this->transformer = $transformer;
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function __invoke(Request $request): JsonResponse
     {
         $request->validate([
@@ -34,7 +38,11 @@ final class SaveSettingsController
             'availabilities.*.time_interval.end' => ['required', sprintf('regex:%s', Time::PATTERN)],
         ]);
 
-        $this->repository->save($this->transformer->fromArray($request->all()));
+        try {
+            $this->repository->save($this->transformer->fromArray($request->all()));
+        } catch (\InvalidArgumentException $e) {
+            throw ValidationException::withMessages(['*' => $e->getMessage()]);
+        }
 
         return new JsonResponse();
     }

@@ -34,7 +34,9 @@ final class SettingsEloquentRepository implements SettingsRepositoryInterface
      */
     public function save(SettingsEntity $entity): void
     {
-        $model = $this->transformer->transformToModel($entity);
+        $foundModel = AvailabilitySettings::where('user_id', $entity->userId()->uuid()->toString())->firstOrNew();
+
+        $model = $this->transformer->transformToModel($entity, $foundModel);
 
         $model->save();
     }
