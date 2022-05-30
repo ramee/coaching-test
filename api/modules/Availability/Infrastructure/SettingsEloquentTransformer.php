@@ -57,7 +57,7 @@ final class SettingsEloquentTransformer
                     'end' => $availability->timeInterval()->end()->time(),
                 ],
             ];
-        }, $entity->availabilityList()->availabilities());
+        }, iterator_to_array($entity->availabilityList()));
 
         $model->availabilities = json_encode($availabilities, JSON_THROW_ON_ERROR);
 

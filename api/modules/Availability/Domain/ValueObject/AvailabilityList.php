@@ -4,7 +4,15 @@ declare(strict_types=1);
 
 namespace Modules\Availability\Domain\ValueObject;
 
-class AvailabilityList
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+use Traversable;
+
+/**
+ * @implements IteratorAggregate<Availability>
+ */
+class AvailabilityList implements IteratorAggregate, Countable
 {
     /** @var Availability[] */
     private array $availabilities;
@@ -14,8 +22,13 @@ class AvailabilityList
         $this->availabilities = $availabilities;
     }
 
-    public function availabilities(): array
+    public function getIterator(): Traversable
     {
-        return $this->availabilities;
+        return new ArrayIterator($this->availabilities);
+    }
+
+    public function count(): int
+    {
+        return count($this->availabilities);
     }
 }

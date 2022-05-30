@@ -29,7 +29,7 @@ final class SettingsArrayTransformer
                         'end' => $availability->timeInterval()->end()->time(),
                     ],
                 ];
-            }, $entity->availabilityList()->availabilities()),
+            }, iterator_to_array($entity->availabilityList())),
             'is_recurring' => $entity->isRecurring(),
         ];
     }
