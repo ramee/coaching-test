@@ -113,4 +113,51 @@ class PossibleBookingSessionServiceTest extends TestCase
             $this->assertEquals($bookingSession->end()->format('Y-m-d H:i'), $possibleBookSessions[$index]->end()->format('Y-m-d H:i'));
         }
     }
+
+    public function testGenerateOne_WithInput_ListOutput(): void
+    {
+        $possibleBookSessions = $this->service->generateOne(
+            new AvailabilityList(
+                new Availability(
+                    DayEnum::Wednesday,
+                    new TimeInterval(
+                        new Time('05:20'), new Time('12:33'),
+                    ),
+                ),
+                new Availability(
+                    DayEnum::Friday,
+                    new TimeInterval(
+                        new Time('08:00'), new Time('16:00'),
+                    ),
+                ),
+                new Availability(
+                    DayEnum::Saturday,
+                    new TimeInterval(
+                        new Time('08:00'), new Time('18:00'),
+                    ),
+                ),
+            ),
+            new \DateTimeImmutable('2022-05-30 01:00')
+        );
+
+        $expectedBookingDates = [
+            new PossibleBookingSession(
+                new \DateTimeImmutable('2022-06-01 05:20'),
+                new \DateTimeImmutable('2022-06-01 12:33')
+            ),
+            new PossibleBookingSession(
+                new \DateTimeImmutable('2022-06-03 08:00'),
+                new \DateTimeImmutable('2022-06-03 16:00')
+            ),
+            new PossibleBookingSession(
+                new \DateTimeImmutable('2022-06-04 08:00'),
+                new \DateTimeImmutable('2022-06-04 18:00')
+            ),
+        ];
+
+        foreach ($expectedBookingDates as $index => $bookingSession) {
+            $this->assertEquals($bookingSession->start()->format('Y-m-d H:i'), $possibleBookSessions[$index]->start()->format('Y-m-d H:i'));
+            $this->assertEquals($bookingSession->end()->format('Y-m-d H:i'), $possibleBookSessions[$index]->end()->format('Y-m-d H:i'));
+        }
+    }
 }

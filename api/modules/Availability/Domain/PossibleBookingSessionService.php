@@ -55,4 +55,11 @@ final class PossibleBookingSessionService
 
         return $possibleBookingSessions;
     }
+
+    public function generateOne(AvailabilityList $availabilityList, DateTimeImmutable $from): array
+    {
+        $to = $from->modify('+1 week');
+
+        return $this->generateRecurring($availabilityList, $from, $to);
+    }
 }
